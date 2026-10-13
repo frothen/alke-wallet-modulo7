@@ -1,0 +1,3 @@
+{% extends "gestion/base.html" %}
+{% block title %}Confirmar eliminación | Alke Wallet{% endblock %}
+{% block content %}<section class="panel form-panel"><h1>Confirmar eliminación</h1><p>¿Seguro que deseas eliminar <strong>{{ object }}</strong>?</p><form method="post">{% csrf_token %}<button class="button danger" type="submit">Sí, eliminar</button> <a class="button secondary" href="{% url 'cuentas_lista' %}">Cancelar</a></form></section>{% endblock %}

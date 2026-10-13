@@ -1,0 +1,22 @@
+{% extends "gestion/base.html" %}
+{% block title %}Resumen | Alke Wallet{% endblock %}
+{% block content %}
+<section class="hero"><div><p class="eyebrow">PANEL PERSONAL</p><h1>Hola{% if cliente %}, {{ cliente.nombre }}{% endif %}</h1>
+<p>Administra tus cuentas y revisa tus movimientos.</p></div>
+{% if not cliente %}<a class="button" href="{% url 'cliente_crear' %}">Crear perfil</a>{% else %}<a class="button" href="{% url 'cliente_editar' cliente.pk %}">Editar perfil</a>{% endif %}</section>
+<div class="metrics">
+  <article class="metric"><span>Cuentas registradas</span><strong>{{ total_cuentas }}</strong></article>
+  <article class="metric"><span>Saldo total (monedas sin conversión)</span><strong>{{ saldo_total|floatformat:2 }}</strong></article>
+</div>
+<div class="section-head"><h2>Mis cuentas</h2><a class="button" href="{% url 'cuenta_crear' %}">+ Nueva cuenta</a></div>
+<div class="cards">
+{% for cuenta in cuentas %}
+<article class="wallet-card"><span class="eyebrow">{{ cuenta.get_tipo_display }}</span><h3>{{ cuenta.alias }}</h3><p class="muted">{{ cuenta.numero }} · {{ cuenta.moneda }}</p><strong class="balance">{{ cuenta.saldo|floatformat:2 }} {{ cuenta.moneda }}</strong><p><span class="pill">{{ cuenta.get_estado_display }}</span></p><a href="{% url 'cuenta_detalle' cuenta.pk %}">Ver detalle →</a></article>
+{% empty %}<article class="empty"><h3>Aún no tienes cuentas</h3><p>Crea tu perfil y luego registra tu primera cuenta.</p>{% if cliente %}<a class="button" href="{% url 'cuenta_crear' %}">Crear cuenta</a>{% endif %}</article>{% endfor %}
+</div>
+<div class="section-head"><h2>Últimas transacciones</h2><a href="{% url 'transacciones_lista' %}">Ver todas →</a></div>
+<div class="panel">
+{% for t in transacciones_recientes %}<div class="list-row"><div><strong>{{ t.cuenta_origen.alias }} → {{ t.cuenta_destino.alias }}</strong><p class="muted">{{ t.fecha|date:"d/m/Y H:i" }} · {{ t.get_estado_display }}</p></div><strong>{{ t.monto|floatformat:2 }}</strong></div>
+{% empty %}<p>No hay transacciones registradas.</p>{% endfor %}
+</div>
+{% endblock %}

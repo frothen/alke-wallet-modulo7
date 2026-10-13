@@ -1,0 +1,4 @@
+{% extends "gestion/base.html" %}
+{% block title %}Transacciones | Alke Wallet{% endblock %}
+{% block content %}<div class="section-head"><div><p class="eyebrow">ACTIVIDAD</p><h1>Transacciones</h1></div><a class="button" href="{% url 'transaccion_crear' %}">+ Registrar transacción</a></div>
+<div class="panel">{% for t in transacciones %}<div class="list-row"><div><strong><a href="{% url 'transaccion_detalle' t.pk %}">#{{ t.pk }} · {{ t.cuenta_origen.alias }} → {{ t.cuenta_destino.alias }}</a></strong><p class="muted">{{ t.fecha|date:"d/m/Y H:i" }} · {{ t.get_tipo_display }} · {{ t.get_estado_display }}</p></div><strong>{{ t.monto|floatformat:2 }} {{ t.cuenta_origen.moneda }}</strong></div>{% empty %}<p>No hay transacciones registradas.</p>{% endfor %}</div>{% endblock %}

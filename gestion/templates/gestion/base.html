@@ -1,0 +1,25 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Alke Wallet{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'gestion/css/styles.css' %}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{% url 'dashboard' %}">Alke <span>Wallet</span></a>
+  <nav>
+    {% if user.is_authenticated %}
+      <a href="{% url 'dashboard' %}">Resumen</a><a href="{% url 'cuentas_lista' %}">Cuentas</a>
+      <a href="{% url 'transacciones_lista' %}">Transacciones</a><a href="{% url 'reporte' %}">Reportes</a>
+      <form method="post" action="{% url 'logout' %}" class="inline">{% csrf_token %}<button class="nav-button">Salir</button></form>
+    {% else %}<a href="{% url 'login' %}">Ingresar</a>{% endif %}
+  </nav>
+</header>
+<main>
+  {% if messages %}<div class="messages">{% for message in messages %}<p class="message">{{ message }}</p>{% endfor %}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Alke Wallet · Proyecto académico Django</footer>
+</body></html>

@@ -1,0 +1,4 @@
+{% extends "gestion/base.html" %}
+{% block title %}Cuentas | Alke Wallet{% endblock %}
+{% block content %}<div class="section-head"><div><p class="eyebrow">PRODUCTOS</p><h1>Mis cuentas</h1></div><a class="button" href="{% url 'cuenta_crear' %}">+ Nueva cuenta</a></div>
+<div class="panel">{% for cuenta in cuentas %}<div class="list-row"><div><strong><a href="{% url 'cuenta_detalle' cuenta.pk %}">{{ cuenta.alias }}</a></strong><p class="muted">{{ cuenta.numero }} · {{ cuenta.moneda }} · {{ cuenta.get_estado_display }}</p></div><strong>{{ cuenta.saldo|floatformat:2 }}</strong></div>{% empty %}<p>No hay cuentas registradas.</p>{% endfor %}</div>{% endblock %}

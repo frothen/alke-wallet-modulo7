@@ -1,0 +1,5 @@
+{% extends "gestion/base.html" %}
+{% block title %}Formulario | Alke Wallet{% endblock %}
+{% block content %}<section class="panel form-panel"><p class="eyebrow">GESTIÓN DE DATOS</p><h1>{% if object %}Editar{% else %}Crear{% endif %} {{ view.model|capfirst }}</h1>
+<form method="post">{% csrf_token %}{{ form.as_p }}<div class="actions"><button class="button" type="submit">Guardar</button><a class="button secondary" href="{% url 'dashboard' %}">Cancelar</a></div></form>
+</section>{% endblock %}
